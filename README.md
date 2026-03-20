@@ -29,3 +29,12 @@ def get_fashion_mnist_labels(labels):  #@save
         if titles:
             ax.set_title(titles[i])
     return axes
+    from mxnet import gluon, init, npx
+from mxnet.gluon import nn
+from d2l import mxnet as d2l
+
+npx.set_np()
+net = nn.Sequential()
+net.add(nn.Dense(256, activation='relu'),
+        nn.Dense(10))
+net.initialize(init.Normal(sigma=0.01))
