@@ -43,4 +43,10 @@ loss = gluon.loss.SoftmaxCrossEntropyLoss()
 trainer = gluon.Trainer(net.collect_params(), 'sgd', {'learning_rate': lr})
 
 train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size)
-d2l.train_ch3(net, train_iter, test_iter, loss, num_epochs, trainer)
+d2l.train_ch3(net, train_iter, test_iter, loss, num_epochs, trainer)、
+import math
+from mxnet import gluon, np, npx
+from mxnet.gluon import nn
+from d2l import mxnet as d2l
+
+npx.set_np()
