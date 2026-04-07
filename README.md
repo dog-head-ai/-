@@ -63,3 +63,27 @@ for i in range(max_degree):
 # labels的维度:(n_train+n_test,)
 labels = np.dot(poly_features, true_w)
 labels += np.random.normal(scale=0.1, size=labels.shape)
+loss = gluon.loss.L2Loss()
+
+def get_net():
+    net = nn.Sequential()
+    net.add(nn.Dense(1))
+    net.initialize()
+    return netloss = gluon.loss.L2Loss()
+
+def get_net():
+    net = nn.Sequential()
+    net.add(nn.Dense(1))
+    net.initialize()
+    return net
+    loss = gluon.loss.L2Loss()
+
+def get_net():
+    net = nn.Sequential()
+    net.add(nn.Dense(1))
+    net.initialize()
+    return net
+    def log_rmse(net, features, labels):
+    # 为了在取对数时进一步稳定该值，将小于1的值设置为1
+    clipped_preds = np.clip(net(features), 1, float('inf'))
+    return np.sqrt(2 * loss(np.log(clipped_preds), np.log(labels)).mean())
