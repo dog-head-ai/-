@@ -118,3 +118,13 @@ def corr2d(X, K):  #@save
         for j in range(Y.shape[1]):
             Y[i, j] = (X[i:i + h, j:j + w] * K).sum()
     return Y
+X = np.array([[0.0, 1.0, 2.0], [3.0, 4.0, 5.0], [6.0, 7.0, 8.0]])
+K = np.array([[0.0, 1.0], [2.0, 3.0]])
+corr2d(X, K)class Conv2D(nn.Block):
+    def __init__(self, kernel_size, **kwargs):
+        super().__init__(**kwargs)
+        self.weight = self.params.get('weight', shape=kernel_size)
+        self.bias = self.params.get('bias', shape=(1,))
+
+    def forward(self, x):
+        return corr2d(x, self.weight.data()) + self.bias.data()
