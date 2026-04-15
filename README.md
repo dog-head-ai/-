@@ -149,3 +149,24 @@ for i in range(10):
     conv2d.weight.data()[:] -= lr * conv2d.weight.grad()
     if (i + 1) % 2 == 0:
         print(f'epoch {i+1}, loss {float(l.sum()):.3f}')
+# 构造一个二维卷积层，它具有1个输出通道和形状为（1，2）的卷积核
+conv2d = nn.Conv2D(1, kernel_size=(1, 2), use_bias=False)
+conv2d.initialize()
+
+# 这个二维卷积层使用四维输入和输出格式（批量大小、通道、高度、宽度），
+# 其中批量大小和通道数都为1
+
+
+X = X.reshape(1, 1, 6, 8)
+Y = Y.reshape(1, 1, 6, 7)
+lr = 3e-2  # 学习率
+
+for i in range(10):
+    with autograd.record():
+        Y_hat = conv2d(X)
+        l = (Y_hat - Y) ** 2
+    l.backward()
+    # 迭代卷积核
+    conv2d.weight.data()[:] -= lr * conv2d.weight.grad()
+    if (i + 1) % 2 == 0:
+        print(f'epoch {i+1}, loss {float(l.sum()):.3f}')
