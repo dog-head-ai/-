@@ -189,3 +189,9 @@ def comp_conv2d(conv2d, X):
 conv2d = nn.Conv2D(1, kernel_size=3, padding=1)
 X = np.random.uniform(size=(8, 8))
 comp_conv2d(conv2d, X).shape
+conv2d = nn.Conv2D(1, kernel_size=(5, 3), padding=(2, 1))
+comp_conv2d(conv2d, X).shape
+conv2d = nn.Conv2D(1, kernel_size=3, padding=1, strides=2)
+comp_conv2d(conv2d, X).shape
+conv2d = nn.Conv2D(1, kernel_size=(3, 5), padding=(0, 1), strides=(3, 4))
+comp_conv2d(conv2d, X).shape
