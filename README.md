@@ -233,3 +233,14 @@ b1.add(nn.Conv2D(64, kernel_size=7, strides=2, padding=3, activation='relu'),
 b2.add(nn.Conv2D(64, kernel_size=1, activation='relu'),
        nn.Conv2D(192, kernel_size=3, padding=1, activation='relu'),
        nn.MaxPool2D(pool_size=3, strides=2, padding=1))
+b3 = nn.Sequential()
+b3.add(Inception(64, (96, 128), (16, 32), 32),
+       Inception(128, (128, 192), (32, 96), 64),
+       nn.MaxPool2D(pool_size=3, strides=2, padding=1))
+       b4 = nn.Sequential()
+b4.add(Inception(192, (96, 208), (16, 48), 64),
+       Inception(160, (112, 224), (24, 64), 64),
+       Inception(128, (128, 256), (24, 64), 64),
+       Inception(112, (144, 288), (32, 64), 64),
+       Inception(256, (160, 320), (32, 128), 128),
+       nn.MaxPool2D(pool_size=3, strides=2, padding=1))
