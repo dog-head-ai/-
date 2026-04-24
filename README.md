@@ -226,3 +226,10 @@ class Inception(nn.Block):
         p4 = self.p4_2(self.p4_1(x))
         # 在通道维度上连结输出
         return np.concatenate((p1, p2, p3, p4), axis=1)
+b1 = nn.Sequential()
+b1.add(nn.Conv2D(64, kernel_size=7, strides=2, padding=3, activation='relu'),
+       nn.MaxPool2D(pool_size=3, strides=2, padding=1))
+       b2 = nn.Sequential()
+b2.add(nn.Conv2D(64, kernel_size=1, activation='relu'),
+       nn.Conv2D(192, kernel_size=3, padding=1, activation='relu'),
+       nn.MaxPool2D(pool_size=3, strides=2, padding=1))
