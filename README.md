@@ -244,3 +244,15 @@ b4.add(Inception(192, (96, 208), (16, 48), 64),
        Inception(112, (144, 288), (32, 64), 64),
        Inception(256, (160, 320), (32, 128), 128),
        nn.MaxPool2D(pool_size=3, strides=2, padding=1))
+from mxnet import np, npx
+from mxnet.gluon import nn
+from d2l import mxnet as d2l
+
+npx.set_np()
+
+def conv_block(num_channels):
+    blk = nn.Sequential()
+    blk.add(nn.BatchNorm(),
+            nn.Activation('relu'),
+            nn.Conv2D(num_channels, kernel_size=3, padding=1))
+    return blk
