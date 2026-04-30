@@ -334,3 +334,11 @@ def count_corpus(tokens):  #@save
         # 将词元列表展平成一个列表
         tokens = [token for line in tokens for token in line]
     return collections.Counter(tokens)
+%matplotlib inline
+import math
+import time
+from mxnet import np
+from d2l import mxnet as d2l
+n = 10000
+a = np.ones([n])
+b = np.ones([n])
