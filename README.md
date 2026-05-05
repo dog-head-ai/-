@@ -398,3 +398,16 @@ def get_params(vocab_size, num_hiddens, device):
     for param in params:
         param.attach_grad()
     return params
+def init_gru_state(batch_size, num_hiddens, device):
+    return (np.zeros(shape=(batch_size, num_hiddens), ctx=device), )def gru(inputs, state, params):
+    W_xz, W_hz, b_z, W_xr, W_hr, b_r, W_xh, W_hh, b_h, W_hq, b_q = params
+    H, = state
+    outputs = []
+    for X in inputs:
+        Z = npx.sigmoid(np.dot(X, W_xz) + np.dot(H, W_hz) + b_z)
+        R = npx.sigmoid(np.dot(X, W_xr) + np.dot(H, W_hr) + b_r)
+        H_tilda = np.tanh(np.dot(X, W_xh) + np.dot(R * H, W_hh) + b_h)
+        H = Z * H + (1 - Z) * H_tilda
+        Y = np.dot(H, W_hq) + b_q
+        outputs.append(Y)
+    return np.concatenate(outputs, axis=0), (H,)
