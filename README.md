@@ -368,3 +368,33 @@ class Timer:  #@save
     def cumsum(self):
         """返回累计时间"""
         return np.array(self.times).cumsum().tolist()
+from mxnet import np, npx
+from mxnet.gluon import rnn
+from d2l import mxnet as d2l
+
+npx.set_np()
+
+batch_size, num_steps = 32, 35
+train_iter, vocab = d2l.load_data_time_machine(batch_size, num_steps)
+def get_params(vocab_size, num_hiddens, device):
+    num_inputs = num_outputs = vocab_size
+
+    def normal(shape):
+        return np.random.normal(scale=0.01, size=shape, ctx=device)
+
+    def three():
+        return (normal((num_inputs, num_hiddens)),
+                normal((num_hiddens, num_hiddens)),
+                np.zeros(num_hiddens, ctx=device))
+
+    W_xz, W_hz, b_z = three()  # 更新门参数
+    W_xr, W_hr, b_r = three()  # 重置门参数
+    W_xh, W_hh, b_h = three()  # 候选隐状态参数
+    # 输出层参数
+    W_hq = normal((num_hiddens, num_outputs))
+    b_q = np.zeros(num_outputs, ctx=device)
+    # 附加梯度
+    params = [W_xz, W_hz, b_z, W_xr, W_hr, b_r, W_xh, W_hh, b_h, W_hq, b_q]
+    for param in params:
+        param.attach_grad()
+    return params
